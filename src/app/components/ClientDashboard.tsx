@@ -1,35 +1,72 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import useSWR from 'swr';
 import EthPriceCard from './EthPriceCard';
 
+interface Factory {
+  id: string;
+  poolCount: string;
+  txCount: string;
+  totalVolumeETH: string;
+  totalFeesETH: string;
+}
+
 interface VolumeData {
-  factories: {
-    id: string;
-    poolCount: string;
-    txCount: string;
-    totalVolumeETH: string;
-    totalFeesETH: string;
-  }[];
+  factories: Factory[];
   bundles: {
     ethPriceUSD: string;
   }[];
 }
 
-interface VolumeDashboardProps {
-  data: VolumeData;
+interface ClientDashboardProps {
+  initialData: VolumeData;
 }
 
-const VolumeDashboard: React.FC<VolumeDashboardProps> = ({ data }) => {
-  const ethPrice = data.bundles[0]?.ethPriceUSD || '0';
+const fetcher = (url: string) => fetch(url).then(res => res.json());
 
-  const totalVolume = data.factories.reduce((acc, factory) => {
+const ClientDashboard: React.FC<ClientDashboardProps> = ({ initialData }) => {
+  const [lastUpdate, setLastUpdate] = useState<string>('');
+
+  const { data, error } = useSWR<VolumeData>(
+    '/api/graph-data',
+    fetcher,
+    {
+      fallbackData: initialData,
+      refreshInterval: 30000,
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+    }
+  );
+
+  useEffect(() => {
+    if (data) {
+      const now = new Date().toLocaleTimeString();
+      setLastUpdate(now);
+      console.log(' Datos actualizados:', {
+        timestamp: now,
+        ethPrice: data.bundles[0]?.ethPriceUSD,
+        totalFactories: data.factories.length
+      });
+    }
+  }, [data]);
+
+  if (error) {
+    console.error('Error fetching data:', error);
+  }
+
+  const currentData = data || initialData;
+  const ethPrice = currentData.bundles[0]?.ethPriceUSD || '0';
+
+  const totalVolume = currentData.factories.reduce((acc: number, factory: Factory) => {
     return acc + parseFloat(factory.totalVolumeETH);
   }, 0);
 
-  const totalFees = data.factories.reduce((acc, factory) => {
+  const totalFees = currentData.factories.reduce((acc: number, factory: Factory) => {
     return acc + parseFloat(factory.totalFeesETH);
   }, 0);
 
-  const totalPools = data.factories.reduce((acc, factory) => {
+  const totalPools = currentData.factories.reduce((acc: number, factory: Factory) => {
     return acc + parseInt(factory.poolCount);
   }, 0);
 
@@ -44,6 +81,12 @@ const VolumeDashboard: React.FC<VolumeDashboardProps> = ({ data }) => {
 
   return (
     <div className="space-y-6">
+      {lastUpdate && (
+        <div className="text-sm text-gray-500 text-right">
+          Última actualización: {lastUpdate}
+        </div>
+      )}
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-4 bg-blue-50 rounded-lg">
           <h3 className="text-lg font-semibold text-blue-800">Total Volume</h3>
@@ -79,7 +122,7 @@ const VolumeDashboard: React.FC<VolumeDashboardProps> = ({ data }) => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {data.factories.map((factory) => (
+              {currentData.factories.map((factory: Factory) => (
                 <tr key={factory.id}>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {factory.id.slice(0, 8)}...{factory.id.slice(-6)}
@@ -108,4 +151,4 @@ const VolumeDashboard: React.FC<VolumeDashboardProps> = ({ data }) => {
   );
 };
 
-export default VolumeDashboard; 
+export default ClientDashboard; 

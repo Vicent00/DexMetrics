@@ -1,6 +1,6 @@
 import { createClient, gql } from 'urql';
 import { cacheExchange, fetchExchange } from '@urql/core';
-import VolumeDashboard from './components/VolumeDashboard';
+import ClientDashboard from './components/ClientDashboard';
 
 const client = createClient({
   url: 'https://gateway.thegraph.com/api/subgraphs/id/FbCGRftH4a3yZugY7TnbYgPJVEv2LvMT6oF1fxPe9aJM',
@@ -42,7 +42,7 @@ export default async function Page() {
     <main className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl text-gray-900 font-bold mb-8">DEX Analytics Dashboard</h1>
-        <VolumeDashboard data={result.data} />
+        <ClientDashboard initialData={result.data} />
       </div>
     </main>
   );
