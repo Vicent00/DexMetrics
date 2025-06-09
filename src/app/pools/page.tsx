@@ -1,6 +1,6 @@
 import { createClient, gql } from 'urql';
 import { cacheExchange, fetchExchange } from '@urql/core';
-import { NextResponse } from 'next/server';
+import PoolsList from '../components/PoolsList';
 
 const client = createClient({
   url: 'https://gateway.thegraph.com/api/subgraphs/id/FbCGRftH4a3yZugY7TnbYgPJVEv2LvMT6oF1fxPe9aJM',
@@ -12,18 +12,8 @@ const client = createClient({
   exchanges: [cacheExchange, fetchExchange],
 });
 
-const DATA_QUERY = gql`
+const POOLS_QUERY = gql`
   query {
-    factories(first: 5) {
-      id
-      poolCount
-      txCount
-      totalVolumeETH
-      totalFeesETH
-    }
-    bundles(first: 1) {
-      ethPriceUSD
-    }
     pools(first: 20, orderBy: totalValueLockedUSD, orderDirection: desc) {
       id
       token0 {
@@ -45,16 +35,21 @@ const DATA_QUERY = gql`
   }
 `;
 
-export async function GET() {
-  try {
-    const result = await client.query(DATA_QUERY, {}).toPromise();
-    
-    if (result.error) {
-      return NextResponse.json({ error: result.error.message }, { status: 500 });
-    }
+export default async function PoolsPage() {
+  const result = await client.query(POOLS_QUERY, {}).toPromise();
 
-    return NextResponse.json(result.data);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+  if (result.error) {
+    return (
+      <div className="p-4 bg-red-50 text-red-800 rounded-lg">
+        <p>Error: {result.error.message}</p>
+      </div>
+    );
   }
+
+  return (
+    <div className="max-w-7xl mx-auto py-8">
+      <h1 className="text-2xl font-bold mb-4">Pools</h1>
+      <PoolsList pools={result.data?.pools || []} />
+    </div>
+  );
 } 

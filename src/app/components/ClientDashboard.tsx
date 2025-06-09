@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import EthPriceCard from './EthPriceCard';
+import PoolsList from './PoolsList';
 
 interface Factory {
   id: string;
@@ -12,11 +13,29 @@ interface Factory {
   totalFeesETH: string;
 }
 
+interface Token {
+  id: string;
+  symbol: string;
+  name: string;
+}
+
+interface Pool {
+  id: string;
+  token0: Token;
+  token1: Token;
+  totalValueLockedUSD: string;
+  volumeUSD: string;
+  feeTier: string;
+  token0Price: string;
+  token1Price: string;
+}
+
 interface VolumeData {
   factories: Factory[];
   bundles: {
     ethPriceUSD: string;
   }[];
+  pools: Pool[];
 }
 
 interface ClientDashboardProps {
@@ -107,6 +126,8 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({ initialData }) => {
 
         <EthPriceCard price={ethPrice} />
       </div>
+
+      {currentData.pools && <PoolsList pools={currentData.pools} />}
 
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Factory Details</h2>
