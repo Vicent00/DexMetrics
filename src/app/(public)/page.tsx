@@ -1,43 +1,37 @@
 'use client';
 
 import Link from 'next/link';
-import Header from '@/components/Header';
-import { useEffect, useState } from 'react';
 
 export default function HomePage() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <Header />
-      
+    <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
         <div className="text-center">
-          <h1 className={`text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+          <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
             <span className="block">Bienvenido a</span>
-            <span className="block text-blue-600 mt-3">GraphDexStreams Analytics</span>
+            <span className="block text-blue-600">GraphDexStreams Analytics</span>
           </h1>
-          <p className={`mt-6 max-w-2xl mx-auto text-xl text-gray-500 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{ animationDelay: '0.2s' }}>
+          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
             Tu plataforma de análisis de datos en tiempo real. Visualiza, analiza y toma decisiones basadas en datos.
           </p>
-          <div className={`mt-10 flex justify-center gap-4 ${isVisible ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
-            <Link
-              href="/register"
-              className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-all duration-300 hover-lift"
-            >
-              Comenzar
-            </Link>
-            <Link
-              href="/login"
-              className="px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition-all duration-300 hover-lift"
-            >
-              Iniciar sesión
-            </Link>
+          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+            <div className="rounded-md shadow">
+              <Link
+                href="/register"
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
+              >
+                Comenzar
+              </Link>
+            </div>
+            <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+              <Link
+                href="/login"
+                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+              >
+                Iniciar sesión
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -45,8 +39,8 @@ export default function HomePage() {
         <div className="mt-24">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {/* Feature 1 */}
-            <div className={`pt-6 ${isVisible ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
-              <div className="flow-root bg-white rounded-lg px-6 pb-8 shadow-lg hover-lift">
+            <div className="pt-6">
+              <div className="flow-root bg-white rounded-lg px-6 pb-8">
                 <div className="-mt-6">
                   <div>
                     <span className="inline-flex items-center justify-center p-3 bg-blue-500 rounded-md shadow-lg">
@@ -64,8 +58,8 @@ export default function HomePage() {
             </div>
 
             {/* Feature 2 */}
-            <div className={`pt-6 ${isVisible ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationDelay: '0.8s' }}>
-              <div className="flow-root bg-white rounded-lg px-6 pb-8 shadow-lg hover-lift">
+            <div className="pt-6">
+              <div className="flow-root bg-white rounded-lg px-6 pb-8">
                 <div className="-mt-6">
                   <div>
                     <span className="inline-flex items-center justify-center p-3 bg-blue-500 rounded-md shadow-lg">
@@ -83,8 +77,8 @@ export default function HomePage() {
             </div>
 
             {/* Feature 3 */}
-            <div className={`pt-6 ${isVisible ? 'animate-slide-in-right' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
-              <div className="flow-root bg-white rounded-lg px-6 pb-8 shadow-lg hover-lift">
+            <div className="pt-6">
+              <div className="flow-root bg-white rounded-lg px-6 pb-8">
                 <div className="-mt-6">
                   <div>
                     <span className="inline-flex items-center justify-center p-3 bg-blue-500 rounded-md shadow-lg">
@@ -105,4 +99,4 @@ export default function HomePage() {
       </main>
     </div>
   );
-}
+} 

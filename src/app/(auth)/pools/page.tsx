@@ -1,6 +1,6 @@
 import { createClient, gql } from 'urql';
 import { cacheExchange, fetchExchange } from '@urql/core';
-import PoolsList from '../components/PoolsList';
+import PoolsList from '../../components/PoolsList';
 
 const client = createClient({
   url: 'https://gateway.thegraph.com/api/subgraphs/id/FbCGRftH4a3yZugY7TnbYgPJVEv2LvMT6oF1fxPe9aJM',

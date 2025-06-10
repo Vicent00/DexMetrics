@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime?
+  analytics Analytics[]
+}
+
+model Analytics {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  totalVolume Json     // { eth: number, usd: number }
+  totalFees   Json     // { eth: number, usd: number }
+  totalPools  Int
+  totalTVL    Float
+  ethPrice    Float
+  timestamp   DateTime @default(now())
+} 

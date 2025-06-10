@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
 @theme inline {
@@ -16,6 +19,9 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
@@ -23,4 +29,427 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+
+  .hover-lift {
+    transition: transform 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+/* Animaciones */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+/* Efectos hover */
+.hover-lift {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Estilos de botones */
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-all duration-300;
+}
+
+.btn-primary {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+}
+
+/* Estilos de inputs */
+.input {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+/* Estilos de tarjetas */
+.card {
+  @apply bg-white rounded-lg shadow-lg p-6;
+}
+
+/* Estilos de contenedores */
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Estilos de títulos */
+.title {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+.subtitle {
+  @apply text-xl text-gray-600;
+}
+
+/* Estilos de navegación */
+.nav-link {
+  @apply text-gray-600 hover:text-gray-900 transition-colors duration-200;
+}
+
+.nav-link-active {
+  @apply text-blue-600 font-medium;
+}
+
+/* Estilos de tablas */
+.table {
+  @apply min-w-full divide-y divide-gray-200;
+}
+
+.table-header {
+  @apply bg-gray-50;
+}
+
+.table-cell {
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-500;
+}
+
+/* Estilos de badges */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-success {
+  @apply bg-green-100 text-green-800;
+}
+
+.badge-warning {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.badge-error {
+  @apply bg-red-100 text-red-800;
+}
+
+/* Estilos de alertas */
+.alert {
+  @apply p-4 rounded-md;
+}
+
+.alert-success {
+  @apply bg-green-50 text-green-800;
+}
+
+.alert-warning {
+  @apply bg-yellow-50 text-yellow-800;
+}
+
+.alert-error {
+  @apply bg-red-50 text-red-800;
+}
+
+/* Estilos de loading */
+.loading {
+  @apply animate-spin rounded-full h-5 w-5 border-2 border-gray-300 border-t-blue-600;
+}
+
+/* Estilos de grid */
+.grid-auto-fit {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+/* Estilos de flex */
+.flex-center {
+  @apply flex items-center justify-center;
+}
+
+.flex-between {
+  @apply flex items-center justify-between;
+}
+
+/* Estilos de espaciado */
+.section {
+  @apply py-12;
+}
+
+.section-lg {
+  @apply py-24;
+}
+
+/* Estilos de texto */
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400;
+}
+
+/* Estilos de sombras */
+.shadow-hover {
+  @apply transition-shadow duration-300 hover:shadow-lg;
+}
+
+/* Estilos de bordes */
+.border-hover {
+  @apply transition-colors duration-300 hover:border-blue-500;
+}
+
+/* Estilos de iconos */
+.icon {
+  @apply h-5 w-5;
+}
+
+.icon-sm {
+  @apply h-4 w-4;
+}
+
+.icon-lg {
+  @apply h-6 w-6;
+}
+
+/* Estilos de tooltips */
+.tooltip {
+  @apply relative inline-block;
+}
+
+.tooltip-text {
+  @apply invisible absolute z-10 px-3 py-2 text-sm text-white bg-gray-900 rounded-md opacity-0 transition-opacity duration-300;
+}
+
+.tooltip:hover .tooltip-text {
+  @apply visible opacity-100;
+}
+
+/* Estilos de scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
+
+/* Estilos de selección */
+::selection {
+  @apply bg-blue-500 text-white;
+}
+
+/* Estilos de focus */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+/* Estilos de transiciones */
+.transition-all {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Estilos de gradientes */
+.gradient-primary {
+  @apply bg-gradient-to-r from-blue-600 to-blue-400;
+}
+
+.gradient-secondary {
+  @apply bg-gradient-to-r from-gray-600 to-gray-400;
+}
+
+/* Estilos de blur */
+.backdrop-blur {
+  @apply backdrop-blur-sm bg-white/75;
+}
+
+/* Estilos de glassmorphism */
+.glass {
+  @apply bg-white/80 backdrop-blur-md border border-white/20;
+}
+
+/* Estilos de dark mode */
+.dark {
+  @apply bg-gray-900 text-white;
+}
+
+.dark .card {
+  @apply bg-gray-800;
+}
+
+.dark .input {
+  @apply bg-gray-700 border-gray-600 text-white;
+}
+
+.dark .btn-secondary {
+  @apply bg-gray-700 text-gray-200 hover:bg-gray-600;
+}
+
+/* Estilos de responsive */
+@media (max-width: 640px) {
+  .container {
+    @apply px-4;
+  }
+  
+  .title {
+    @apply text-2xl;
+  }
+  
+  .subtitle {
+    @apply text-lg;
+  }
+}
+
+/* Estilos de print */
+@media print {
+  .no-print {
+    @apply hidden;
+  }
+  
+  .print-only {
+    @apply block;
+  }
 }

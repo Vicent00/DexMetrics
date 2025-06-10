@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useMemo } from 'react';
 
 interface Token {
   id: string;
@@ -21,7 +23,15 @@ interface PoolsListProps {
   pools?: Pool[];
 }
 
+type SortField = 'tvl' | 'volume' | 'fee';
+type SortDirection = 'asc' | 'desc';
+
 const PoolsList: React.FC<PoolsListProps> = ({ pools = [] }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortField, setSortField] = useState<SortField>('tvl');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [selectedFeeTier, setSelectedFeeTier] = useState<string>('all');
+
   const formatUSD = (value: string) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -33,6 +43,43 @@ const PoolsList: React.FC<PoolsListProps> = ({ pools = [] }) => {
 
   const formatNumber = (value: string) => {
     return parseFloat(value).toFixed(4);
+  };
+
+  const filteredAndSortedPools = useMemo(() => {
+    let filtered = pools.filter(pool => {
+      const pairName = `${pool.token0.symbol}/${pool.token1.symbol}`.toLowerCase();
+      const searchLower = searchTerm.toLowerCase();
+      const matchesSearch = pairName.includes(searchLower);
+      const matchesFeeTier = selectedFeeTier === 'all' || 
+        (parseInt(pool.feeTier) / 10000).toString() === selectedFeeTier;
+      
+      return matchesSearch && matchesFeeTier;
+    });
+
+    return filtered.sort((a, b) => {
+      let comparison = 0;
+      switch (sortField) {
+        case 'tvl':
+          comparison = parseFloat(a.totalValueLockedUSD) - parseFloat(b.totalValueLockedUSD);
+          break;
+        case 'volume':
+          comparison = parseFloat(a.volumeUSD) - parseFloat(b.volumeUSD);
+          break;
+        case 'fee':
+          comparison = parseInt(a.feeTier) - parseInt(b.feeTier);
+          break;
+      }
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+  }, [pools, searchTerm, sortField, sortDirection, selectedFeeTier]);
+
+  const handleSort = (field: SortField) => {
+    if (field === sortField) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('desc');
+    }
   };
 
   if (!pools || pools.length === 0) {
@@ -47,21 +94,57 @@ const PoolsList: React.FC<PoolsListProps> = ({ pools = [] }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Top Pools by TVL</h2>
-      <div className="overflow-x-auto">
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg shadow-lg p-6">
+      <div className="mb-6 space-y-4">
+        <div className="flex flex-col md:flex-row gap-4">
+          <input
+            type="text"
+            placeholder="Buscar por par (ej: ETH/USDC)"
+            className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600 bg-white/80 backdrop-blur-sm"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select
+            className="px-4 py-2 border text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/80 backdrop-blur-sm"
+            value={selectedFeeTier}
+            onChange={(e) => setSelectedFeeTier(e.target.value)}
+          >
+            <option value="all">Todos los Fee Tiers</option>
+            <option value="0.05">0.05%</option>
+            <option value="0.3">0.3%</option>
+            <option value="1">1%</option>
+          </select>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto bg-white/90 backdrop-blur-sm rounded-lg shadow">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Pair</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fee Tier</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">TVL</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Volume 24h</th>
+              <th 
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                onClick={() => handleSort('fee')}
+              >
+                Fee Tier {sortField === 'fee' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                onClick={() => handleSort('tvl')}
+              >
+                TVL {sortField === 'tvl' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                onClick={() => handleSort('volume')}
+              >
+                Volume 24h {sortField === 'volume' && (sortDirection === 'asc' ? '↑' : '↓')}
+              </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {pools.map((pool) => (
+            {filteredAndSortedPools.map((pool) => (
               <tr key={pool.id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">

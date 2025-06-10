@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GraphDexStreams Analytics Platform
+
+A modern analytics platform built with Next.js, providing real-time data visualization and statistical analysis capabilities.
+
+## Features
+
+- 🔐 Secure Authentication System
+- 📊 Real-time Data Analytics
+- 📈 Interactive Dashboards
+- 🔄 Real-time Data Updates
+- 📱 Responsive Design
+- 🎨 Modern UI with Tailwind CSS
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js (v18.0.0 or higher)
+- npm (v9.0.0 or higher)
+- PostgreSQL (v14 or higher)
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone the repository**
+```bash
+git clone https://github.com/Vicent00/GraphDexStreams.git
+cd GraphDexStreams
+```
 
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Environment Setup**
+
+Create a `.env` file in the root directory with the following variables:
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/graphdexstreams"
+JWT_SECRET="your-secure-jwt-secret"
+NODE_ENV="development"
+```
+
+4. **Database Setup**
+
+Initialize the database with Prisma:
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+5. **Run the development server**
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+GraphDexStreams/
+├── src/
+│   ├── app/              # Next.js app directory
+│   ├── components/       # React components
+│   ├── lib/             # Utility functions and libraries
+│   ├── utils/           # Helper functions
+│   └── types/           # TypeScript type definitions
+├── prisma/              # Database schema and migrations
+├── public/              # Static files
+└── tests/              # Test files
+```
 
-## Learn More
+## API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+### Authentication
+- `POST /api/auth/register` - Register a new user
+- `POST /api/auth/login` - Login user
+- `GET /api/auth/me` - Get current user data
+- `POST /api/auth/logout` - Logout user
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Analytics
+- `GET /api/analytics/dashboard` - Get dashboard statistics
+- `GET /api/analytics/trends` - Get data trends
+- `GET /api/analytics/distribution` - Get data distribution
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+### Vercel Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Push your code to GitHub
+2. Import your repository to Vercel
+3. Configure environment variables in Vercel dashboard
+4. Deploy!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Manual Deployment
+
+1. Build the application:
+```bash
+npm run build
+```
+
+2. Start the production server:
+```bash
+npm start
+```
+
+## Environment Variables
+
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| DATABASE_URL | PostgreSQL connection string | Yes | - |
+| JWT_SECRET | Secret for JWT token generation | Yes | - |
+| NODE_ENV | Environment (development/production) | No | development |
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, email info@vicenteaguilar.com or open an issue in the GitHub repository.
+
+## Acknowledgments
+
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Prisma](https://www.prisma.io/)
+- [Chart.js](https://www.chartjs.org/)
