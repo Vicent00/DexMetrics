@@ -27,13 +27,13 @@ export default function HomePage() {
           </p>
           <div className={`mt-10 flex justify-center gap-4 ${isVisible ? 'animate-scale-in' : 'opacity-0'}`} style={{ animationDelay: '0.4s' }}>
             <Link
-              href="/register"
+              href="/public-routes/register"
               className="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10 transition-all duration-300 hover-lift"
             >
               Get Started
             </Link>
             <Link
-              href="/login"
+              href="/public-routes/login"
               className="px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10 transition-all duration-300 hover-lift"
             >
               Login

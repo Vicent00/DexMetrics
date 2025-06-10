@@ -10,7 +10,7 @@ interface User {
   name: string;
 }
 
-const publicPaths = ['/', '/login', '/register'];
+const publicPaths = ['/', '/public-routes/login', '/public-routes/register'];
 
 export default function Header() {
   const router = useRouter();
@@ -182,13 +182,13 @@ export default function Header() {
             ) : (
               <>
                 <Link
-                  href="/login"
+                  href="/public-routes/login"
                   className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900"
                 >
                   Login
                 </Link>
                 <Link
-                  href="/register"
+                  href="/public-routes/register"
                   className="px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   Register

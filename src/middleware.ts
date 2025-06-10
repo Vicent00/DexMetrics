@@ -5,8 +5,8 @@ import { verifyToken } from './utils/auth';
 // Public routes that don't require authentication
 const publicRoutes = [
   '/',
-  '/login',
-  '/register',
+  '/public-routes/login',
+  '/public-routes/register',
   '/api/auth/login',
   '/api/auth/register',
   '/api/auth/logout',
