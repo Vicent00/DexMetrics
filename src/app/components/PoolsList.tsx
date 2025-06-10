@@ -46,7 +46,7 @@ const PoolsList: React.FC<PoolsListProps> = ({ pools = [] }) => {
   };
 
   const filteredAndSortedPools = useMemo(() => {
-    let filtered = pools.filter(pool => {
+    const filtered = pools.filter(pool => {
       const pairName = `${pool.token0.symbol}/${pool.token1.symbol}`.toLowerCase();
       const searchLower = searchTerm.toLowerCase();
       const matchesSearch = pairName.includes(searchLower);

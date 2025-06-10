@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -17,8 +15,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  RadialBarChart,
-  RadialBar,
   ScatterChart,
   Scatter,
   ZAxis
@@ -59,6 +55,16 @@ interface AnalyticsData {
     };
     tvl: number;
   }>;
+}
+
+interface ChartData {
+  date: string;
+  value: number;
+}
+
+interface ErrorResponse {
+  message: string;
+  code?: string;
 }
 
 const COLORS = {
@@ -141,6 +147,11 @@ const MetricCard = ({ title, value, change, isPositive }: { title: string; value
     </p>
   </div>
 );
+
+const handleError = (error: ErrorResponse) => {
+  console.error('Error:', error);
+  // Handle error appropriately
+};
 
 const AnalyticsStats: React.FC = () => {
   const [data, setData] = useState<AnalyticsData | null>(null);

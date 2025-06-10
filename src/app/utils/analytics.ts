@@ -1,21 +1,52 @@
 import { 
-  AnalyticsData, 
   ProcessedAnalyticsData, 
   ProcessedMetrics, 
   ProcessedPool, 
   ProcessedFactory 
 } from '../types/analytics';
 
-export function processAnalyticsData(data: AnalyticsData): ProcessedAnalyticsData {
+interface Bundle {
+  ethPriceUSD: string;
+}
+
+interface Factory {
+  id: string;
+  totalVolumeETH: string;
+  totalFeesETH: string;
+  poolCount: string;
+  totalValueLockedUSD: string;
+  txCount: string;
+}
+
+interface Pool {
+  id: string;
+  token0: {
+    symbol: string;
+  };
+  token1: {
+    symbol: string;
+  };
+  feeTier: string;
+  totalValueLockedUSD: string;
+  volumeUSD: string;
+}
+
+interface RawAnalyticsData {
+  bundles: Bundle[];
+  pools: Pool[];
+  factories: Factory[];
+}
+
+export function processAnalyticsData(data: RawAnalyticsData): ProcessedAnalyticsData {
   const ethPrice = parseFloat(data.bundles[0]?.ethPriceUSD || '0');
 
-  // Procesar métricas
+  // Process metrics
   const metrics = processMetrics(data, ethPrice);
 
-  // Procesar pools
+  // Process pools
   const pools = data.pools.map(pool => processPool(pool));
 
-  // Procesar factories
+  // Process factories
   const factories = data.factories.map(factory => processFactory(factory, ethPrice));
 
   return {
@@ -25,20 +56,20 @@ export function processAnalyticsData(data: AnalyticsData): ProcessedAnalyticsDat
   };
 }
 
-function processMetrics(data: AnalyticsData, ethPrice: number): ProcessedMetrics {
-  const totalVolume = data.factories.reduce((acc, factory) => {
+function processMetrics(data: RawAnalyticsData, ethPrice: number): ProcessedMetrics {
+  const totalVolume = data.factories.reduce((acc: number, factory: Factory) => {
     return acc + parseFloat(factory.totalVolumeETH || '0');
   }, 0);
 
-  const totalFees = data.factories.reduce((acc, factory) => {
+  const totalFees = data.factories.reduce((acc: number, factory: Factory) => {
     return acc + parseFloat(factory.totalFeesETH || '0');
   }, 0);
 
-  const totalPools = data.factories.reduce((acc, factory) => {
+  const totalPools = data.factories.reduce((acc: number, factory: Factory) => {
     return acc + parseInt(factory.poolCount || '0');
   }, 0);
 
-  const totalTVL = data.factories.reduce((acc, factory) => {
+  const totalTVL = data.factories.reduce((acc: number, factory: Factory) => {
     return acc + parseFloat(factory.totalValueLockedUSD || '0');
   }, 0);
 
@@ -57,7 +88,7 @@ function processMetrics(data: AnalyticsData, ethPrice: number): ProcessedMetrics
   };
 }
 
-function processPool(pool: any): ProcessedPool {
+function processPool(pool: Pool): ProcessedPool {
   return {
     id: pool.id,
     pair: `${pool.token0.symbol}/${pool.token1.symbol}`,
@@ -67,7 +98,7 @@ function processPool(pool: any): ProcessedPool {
   };
 }
 
-function processFactory(factory: any, ethPrice: number): ProcessedFactory {
+function processFactory(factory: Factory, ethPrice: number): ProcessedFactory {
   return {
     id: factory.id,
     poolCount: parseInt(factory.poolCount),
@@ -82,4 +113,8 @@ function processFactory(factory: any, ethPrice: number): ProcessedFactory {
     },
     tvl: parseFloat(factory.totalValueLockedUSD)
   };
-} 
+}
+
+export const formatAnalyticsData = (data: RawAnalyticsData) => {
+  return processAnalyticsData(data);
+}; 

@@ -2,12 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { 
-  ChartBarIcon, 
   UsersIcon, 
   ClockIcon, 
-  ArrowTrendingUpIcon,
-  DocumentChartBarIcon,
-  ChartPieIcon
+  DocumentChartBarIcon
 } from '@heroicons/react/24/outline';
 
 interface DashboardStats {

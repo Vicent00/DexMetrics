@@ -34,8 +34,8 @@ export async function middleware(request: NextRequest) {
     // Verify token
     await verifyToken(token);
     return NextResponse.next();
-  } catch (error) {
-    // If token is invalid, redirect to login
+  } catch (err) {
+    console.error('Middleware error:', err);
     const url = new URL('/login', request.url);
     url.searchParams.set('from', pathname);
     return NextResponse.redirect(url);

@@ -54,7 +54,8 @@ export async function GET() {
     }
 
     return NextResponse.json(result.data);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
+  } catch (err) {
+    console.error('Error fetching graph data:', err);
+    return NextResponse.json({ error: 'Failed to fetch graph data' }, { status: 500 });
   }
 } 
