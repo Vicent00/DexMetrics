@@ -5,8 +5,15 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "GraphDexStreams - Análisis de Datos en Tiempo Real",
-  description: "Plataforma de análisis de datos en tiempo real para DEXs y pools de liquidez",
+  title: "GraphDexStreams - Real-Time Data Analysis",
+  description: "Real-time data analysis platform for DEXs and liquidity pools",
+  icons: {
+    icon: [
+      { url: '/logo.png', type: 'image/png' }
+    ],
+    shortcut: '/logo.png',
+    apple: '/logo.png'
+  },
 };
 
 export default function RootLayout({
@@ -15,8 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/logo.png" type="image/png" />
+      </head>
+      <body className={inter.className} suppressHydrationWarning>
         {children}
       </body>
     </html>

@@ -29,7 +29,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Las contraseñas no coinciden');
+      setError('Passwords do not match');
       setIsLoading(false);
       return;
     }
@@ -50,13 +50,13 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Error al registrar');
+        throw new Error(data.message || 'Error registering');
       }
 
       router.push('/login?registered=true');
     } catch (error) {
       console.error('Error registering:', error);
-      setError(error instanceof Error ? error.message : 'Error al registrar');
+      setError(error instanceof Error ? error.message : 'Error registering');
     } finally {
       setIsLoading(false);
     }
@@ -66,12 +66,12 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Crear una cuenta
+          Create an account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
-          ¿Ya tienes una cuenta?{' '}
+          Already have an account?{' '}
           <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
-            Inicia sesión
+            Sign in
           </Link>
         </p>
         <div className="mt-4 text-center">
@@ -82,7 +82,7 @@ export default function RegisterPage() {
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Volver al inicio
+            Back to home
           </Link>
         </div>
       </div>
@@ -91,14 +91,18 @@ export default function RegisterPage() {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded relative" role="alert">
-                <span className="block sm:inline">{error}</span>
+              <div className="rounded-md bg-red-50 p-4">
+                <div className="flex">
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-red-800">{error}</h3>
+                  </div>
+                </div>
               </div>
             )}
 
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Nombre
+                Full name
               </label>
               <div className="mt-1">
                 <input
@@ -106,17 +110,16 @@ export default function RegisterPage() {
                   name="name"
                   type="text"
                   required
-                  placeholder="Ingresa tu nombre"
                   value={formData.name}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-700 text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Correo electrónico
+                Email address
               </label>
               <div className="mt-1">
                 <input
@@ -125,17 +128,16 @@ export default function RegisterPage() {
                   type="email"
                   autoComplete="email"
                   required
-                  placeholder="ejemplo@correo.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-700 text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Contraseña
+                Password
               </label>
               <div className="mt-1">
                 <input
@@ -144,17 +146,16 @@ export default function RegisterPage() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  placeholder="••••••••"
                   value={formData.password}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-700 text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
 
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                Confirmar contraseña
+                Confirm password
               </label>
               <div className="mt-1">
                 <input
@@ -163,10 +164,9 @@ export default function RegisterPage() {
                   type="password"
                   autoComplete="new-password"
                   required
-                  placeholder="••••••••"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-700 text-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function RegisterPage() {
                 {isLoading ? (
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
-                  'Registrarse'
+                  'Register'
                 )}
               </button>
             </div>

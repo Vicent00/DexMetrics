@@ -99,7 +99,7 @@ const PoolsList: React.FC<PoolsListProps> = ({ pools = [] }) => {
         <div className="flex flex-col md:flex-row gap-4">
           <input
             type="text"
-            placeholder="Buscar por par (ej: ETH/USDC)"
+            placeholder="Search by pair (e.g., ETH/USDC)"
             className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-600 bg-white/80 backdrop-blur-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -109,7 +109,7 @@ const PoolsList: React.FC<PoolsListProps> = ({ pools = [] }) => {
             value={selectedFeeTier}
             onChange={(e) => setSelectedFeeTier(e.target.value)}
           >
-            <option value="all">Todos los Fee Tiers</option>
+            <option value="all">All Fee Tiers</option>
             <option value="0.05">0.05%</option>
             <option value="0.3">0.3%</option>
             <option value="1">1%</option>

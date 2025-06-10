@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from './utils/auth';
 
-// Rutas públicas que no requieren autenticación
+// Public routes that don't require authentication
 const publicRoutes = [
   '/',
   '/login',
@@ -15,15 +15,15 @@ const publicRoutes = [
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Verificar si la ruta actual es pública
+  // Check if current route is public
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
-  // Obtener el token de la cookie
+  // Get token from cookie
   const token = request.cookies.get('token')?.value;
 
-  // Si no hay token, redirigir al login
+  // If no token, redirect to login
   if (!token) {
     const url = new URL('/login', request.url);
     url.searchParams.set('from', pathname);
@@ -31,11 +31,11 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    // Verificar el token
+    // Verify token
     await verifyToken(token);
     return NextResponse.next();
   } catch (error) {
-    // Si el token es inválido, redirigir al login
+    // If token is invalid, redirect to login
     const url = new URL('/login', request.url);
     url.searchParams.set('from', pathname);
     return NextResponse.redirect(url);
@@ -50,9 +50,10 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - logo.png (logo file)
      * - public folder
      * - api routes
      */
-    '/((?!_next/static|_next/image|favicon.ico|public|api).*)',
+    '/((?!_next/static|_next/image|favicon.ico|logo.png|public|api).*)',
   ],
 }; 

@@ -48,7 +48,7 @@ export default async function PoolsPage() {
 
   return (
     <div className="max-w-7xl mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-4">Pools</h1>
+      <h1 className="text-2xl  text-gray-900 font-bold mb-4">Pools</h1>
       <PoolsList pools={result.data?.pools || []} />
     </div>
   );

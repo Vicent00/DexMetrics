@@ -20,7 +20,7 @@ export default function Header() {
 
   useEffect(() => {
     const checkAuth = async () => {
-      // Si estamos en una ruta pública, no verificamos la autenticación
+      // If we're on a public route, don't check authentication
       if (publicPaths.includes(pathname)) {
         setIsLoading(false);
         return;
@@ -36,7 +36,7 @@ export default function Header() {
         });
 
         if (!response.ok) {
-          throw new Error('No autorizado');
+          throw new Error('Unauthorized');
         }
 
         const data = await response.json();
@@ -65,7 +65,7 @@ export default function Header() {
       });
 
       if (!response.ok) {
-        throw new Error('Error al cerrar sesión');
+        throw new Error('Error logging out');
       }
 
       setUser(null);
@@ -135,7 +135,7 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2 border-l border-gray-200 pl-4">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/Vicent00"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors duration-200"
@@ -150,7 +150,7 @@ export default function Header() {
                 </svg>
               </a>
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="https://github.com/Vicent00/DexMetrics"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors duration-200"
@@ -170,13 +170,13 @@ export default function Header() {
             ) : user ? (
               <>
                 <span className="text-sm text-gray-600">
-                  Bienvenido, {user.name}
+                  Welcome, {user.name}
                 </span>
                 <button
                   onClick={handleLogout}
                   className="px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
-                  Cerrar sesión
+                  Logout
                 </button>
               </>
             ) : (
@@ -185,13 +185,13 @@ export default function Header() {
                   href="/login"
                   className="px-4 py-2 text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Iniciar sesión
+                  Login
                 </Link>
                 <Link
                   href="/register"
                   className="px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
-                  Registrarse
+                  Register
                 </Link>
               </>
             )}

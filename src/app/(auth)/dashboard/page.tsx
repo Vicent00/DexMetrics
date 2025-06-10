@@ -55,7 +55,7 @@ export default function DashboardPage() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Usuarios Totales
+                    Total Users
                   </dt>
                   <dd className="text-3xl font-semibold text-gray-900">
                     {stats.totalUsers.toLocaleString()}
@@ -75,7 +75,7 @@ export default function DashboardPage() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Tiempo Promedio de Sesión
+                    Average Session Time
                   </dt>
                   <dd className="text-3xl font-semibold text-gray-900">
                     {stats.averageSessionTime}
@@ -95,7 +95,7 @@ export default function DashboardPage() {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-gray-500 truncate">
-                    Puntos de Datos Recolectados
+                    Data Points Collected
                   </dt>
                   <dd className="text-3xl font-semibold text-gray-900">
                     {stats.dataPointsCollected.toLocaleString()}
@@ -111,19 +111,19 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 mb-4">
-            Tendencias de Datos
+            Data Trends
           </h3>
           <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500">Gráfico de Tendencias</p>
+            <p className="text-gray-500">Data Trends Graph</p>
           </div>
         </div>
 
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 mb-4">
-            Distribución de Datos
+            Data Distribution
           </h3>
           <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-            <p className="text-gray-500">Gráfico de Distribución</p>
+            <p className="text-gray-500">Data Distribution Graph</p>
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@ export default function DashboardPage() {
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 mb-4">
-            Precisión de Datos
+            Data Accuracy
           </h3>
           <div className="flex items-center">
             <div className="flex-1">
@@ -151,7 +151,7 @@ export default function DashboardPage() {
 
         <div className="bg-white shadow rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 mb-4">
-            Última Actualización
+            Last Update
           </h3>
           <p className="text-gray-600">
             {stats.lastUpdate}

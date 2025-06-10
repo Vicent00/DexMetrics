@@ -11,6 +11,22 @@ A modern analytics platform built with Next.js, providing real-time data visuali
 - 📱 Responsive Design
 - 🎨 Modern UI with Tailwind CSS
 
+## Data Sources
+
+### Real Data
+- User authentication and session management
+- Database interactions and user data
+- API endpoints and server-side operations
+
+### Mock Data
+- Initial pool statistics and TVL data
+- Token price movements and market data
+- Volume and liquidity metrics
+- Historical price charts
+- APR calculations
+
+*Note: Mock data is used for demonstration purposes. In production, these will be replaced with real-time data from DEX aggregators or no it depends in the point of production and blockchain networks.*
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:

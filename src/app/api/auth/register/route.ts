@@ -4,40 +4,40 @@ import { hashPassword, generateToken } from '@/utils/auth';
 
 export async function POST(request: Request) {
   try {
-    console.log('Register API - Iniciando proceso de registro...');
+    console.log('Register API - Starting registration process...');
     const body = await request.json();
-    console.log('Register API - Datos recibidos:', { email: body.email });
+    console.log('Register API - Received data:', { email: body.email });
 
     const { email, password, name } = body;
 
     if (!email || !password || !name) {
-      console.log('Register API - Error: Datos incompletos');
+      console.log('Register API - Error: Incomplete data');
       return NextResponse.json(
-        { message: 'Todos los campos son requeridos' },
+        { message: 'All fields are required' },
         { status: 400 }
       );
     }
 
-    // Verificar si el usuario ya existe
-    console.log('Register API - Verificando si el usuario ya existe...');
+    // Check if user already exists
+    console.log('Register API - Checking if user already exists...');
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
 
     if (existingUser) {
-      console.log('Register API - Usuario ya existe');
+      console.log('Register API - User already exists');
       return NextResponse.json(
-        { message: 'El email ya está registrado' },
+        { message: 'Email is already registered' },
         { status: 400 }
       );
     }
 
-    // Hash de la contraseña
-    console.log('Register API - Hasheando contraseña...');
+    // Hash password
+    console.log('Register API - Hashing password...');
     const hashedPassword = await hashPassword(password);
 
-    // Crear usuario
-    console.log('Register API - Creando nuevo usuario...');
+    // Create user
+    console.log('Register API - Creating new user...');
     const user = await prisma.user.create({
       data: {
         email,
@@ -46,15 +46,15 @@ export async function POST(request: Request) {
       },
     });
 
-    // Generar token
-    console.log('Register API - Generando token...');
+    // Generate token
+    console.log('Register API - Generating token...');
     const token = await generateToken({ 
       id: user.id, 
       email: user.email,
-      role: 'user' // Rol por defecto para usuarios registrados
+      role: 'user' // Default role for registered users
     });
 
-    // Crear respuesta
+    // Create response
     const response = NextResponse.json({
       success: true,
       user: {
@@ -66,24 +66,24 @@ export async function POST(request: Request) {
       },
     });
 
-    // Establecer cookie
-    console.log('Register API - Estableciendo cookie...');
+    // Set cookie
+    console.log('Register API - Setting cookie...');
     response.cookies.set({
       name: 'token',
       value: token,
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24, // 24 horas
+      maxAge: 60 * 60 * 24, // 24 hours
       path: '/',
     });
 
-    console.log('Register API - Registro exitoso, cookie establecida');
+    console.log('Register API - Registration successful, cookie set');
     return response;
   } catch (error) {
-    console.error('Register API - Error en registro:', error);
+    console.error('Register API - Error in registration:', error);
     return NextResponse.json(
-      { message: 'Error en el servidor' },
+      { message: 'Server error' },
       { status: 500 }
     );
   }
