@@ -8,7 +8,7 @@ const client = createClient({
   url: 'https://gateway.thegraph.com/api/subgraphs/id/FbCGRftH4a3yZugY7TnbYgPJVEv2LvMT6oF1fxPe9aJM',
   fetchOptions: {
     headers: {
-      Authorization: 'Bearer da50dd755b12aa4b26b62d1aaa365c29',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_GRAPH_API_KEY}`,
     },
   },
   exchanges: [cacheExchange, fetchExchange],
